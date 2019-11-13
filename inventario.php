@@ -2,6 +2,7 @@
 session_id('inventario');
 session_start(); 
 echo session_name().'<br>'. session_id();
+$_SESSION=array();
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,38 +12,34 @@ echo session_name().'<br>'. session_id();
 </head>
 <body>
 
-
 	<form action="" action="GET">
 		<fieldset>
 			<legend>Añade producto</legend>
 			<label>Código </label>
-			<input id="cod" name="cod" type="text" placeholder="Introduce el código" required>
-			<span style="color: red"><?php if (!preg_match("/^[a-zA-Z0-9]*$/",$_GET['cod'])){
-					echo 'Código incorrecto';
-				}
-			?>
-				
-			</span> 
+			<input id="cod" name="codigo" type="text" placeholder="Introduce el código" required>
+			<span><?php if (!preg_match("/^[a-zA-Z0-9]*$/", $_GET['codigo'])){
+				echo 'Código incorrecto';
+			}
+			?></span> 
 			<br>
 			<label>Descripción: </label>
-			<textarea id="desc" name="desc" type="text" placeholder="Introduce una descripción" required></textarea>
+			<textarea id="desc" name="descripcion" type="text" placeholder="Introduce una descripción" required></textarea>
 			<span><?php 
-				if (!preg_match("/^[a-zA-Z0-9]*$/",$_GET['desc']) ){
-					echo 'Caracteres no permitidos';
+					if (!preg_match("/^[a-zA-Z0-9]*$/",$_GET['descripcion'])){
+						echo 'Caracteres no permitidos';
 				}
 			?>
-				
+
 			</span>
 			<br>
 			<br>
 			<label>Precio</label>
 			<input id="precio" name="precio" type="number" placeholder="Introduce el precio" required>
 			<span><?php 
-				if(empty($_GET['precio'])){
-					echo 'Precio requerido';
-				}
-			 ?>
-				
+					if(empty($_GET['precio'])){
+						echo 'Precio requerido';
+					}?>
+
 			</span>
 			<br>
 			<br>
@@ -50,30 +47,55 @@ echo session_name().'<br>'. session_id();
 		</fieldset>
 	</form>
 
-	<div>
-		<?php
+<div>
+	<?php
 
-		/**Comprueba si se ha pulsado el boton submit*/
-		if (isset($_GET["submit"])){
-			/**Funcion strtoupper para convertir la cadena "código" a mayusculas */
-			$codigo=strtoupper($_GET['cod']);
-			$descripcion=strtolower($_GET['desc']);
-			$precio=$_GET['precio'];
+	/**Comprueba si se ha pulsado el boton submit*/
+	if (!empty($_GET["submit"])){
+		/**$codigo=strtoupper($_GET['codigo']);
+		$descripcion=strtolower($_GET['descripcion']);
+		$precio=$_GET['precio'];
+		/**Funcion strtoupper para convertir la cadena "código" a mayusculas */
 
-			$_SESSION['inventario'][$codigo] = $descripcion;
+		if (!empty($_GET['codigo']) && !empty($_GET['descripcion']) && !empty($_GET['precio'])) {
+			
+			$_SESSION['inventario'][$_GET['codigo']]=array(
+				'descripcion'=>$_GET['descripcion'],
+				'precio'=>$_GET['precio']
+			);
 
-			foreach($_SESSION['inventario'] as $codigo => $descripcion)
-					echo '<div><span>'.$codigo.'</span><span>'.$descripcion.'</span></div>';
 
-			//$_SESSION['inventario']=$codigo;
+			var_dump($_SESSION['inventario']);
+			var_dump($_GET['codigo']);
+			echo $_GET['codigo'];
+			echo '<br>';
+			echo $_SESSION['inventario'][$_GET['codigo']]['descripcion'];
+			echo '<br>';
+			echo $_SESSION['inventario'][$_GET['codigo']]['precio'];
 
-			//echo $codigo;	
+		
+
+
+				foreach ($_SESSION['invetario'] as $codigo => $datos){
+					foreach ($datos as $value) {
+						
+					}
+
+				} 
+			
+				
 		}
 
-		?>
+		
+		
+		
+
+	}
+
+	?>
 
 
-	</div>
+</div>
 
 </body>
 </html>
