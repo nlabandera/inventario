@@ -49,7 +49,6 @@ echo session_name().'<br>'. session_id();
 
 <div>
 	<?php
-
 	/**Comprueba si se ha pulsado el boton submit*/
 	if (!empty($_GET["submit"])){
 		$codigo=strtoupper($_GET['codigo']);
@@ -57,67 +56,31 @@ echo session_name().'<br>'. session_id();
 		$precio=$_GET['precio'];
 		/**Funcion strtoupper para convertir la cadena "código" a mayusculas */
 
-		if (!empty($_GET['codigo']) && !empty($_GET['descripcion']) && !empty($_GET['precio'])) {
+		if (!empty($codigo) && !empty($descripcion) && !empty($precio)) {
 			
-			$_SESSION['inventario'][$_GET['codigo']]=[
-				'descripcion'=>$_GET['descripcion'],
-				'precio'=>$_GET['precio']
+			
+			
+			$_SESSION['inventario'][$codigo]=[
+				'descripcion'=>$descripcion,
+				'precio'=>$precio
 			];
 
-			foreach ($_SESSION['inventario'] as $codigo) {
-				sort($codigo);
-				$clong=count($codigo);
-
-				for($x = 0; $x < $clong; $x++) {
-					echo $codigo[$x];
-					echo "<br>";
-				}
+			foreach ($_SESSION['inventario'] as $codigo=>$detalles) {
+				echo $codigo.'<br>';
 				
-			}
-			
-
-			
-			var_dump($_SESSION['inventario']);
-			//var_dump($_GET['codigo']);
-			//var_dump(each($_GET['codigo']));
-			//echo $_GET['codigo'];
-			//echo '<br>';
-			//echo $_SESSION['inventario'][$_GET['codigo']]['descripcion'];
-			//echo '<br>';
-			//echo $_SESSION['inventario'][$_GET['codigo']]['precio'];
-
-		
-			/*foreach ($_SESSION['invetario'] as $codigo => $datos){
-				echo $codigo;
-				foreach ($datos as $key=>$valor) {
-					echo $valor;
-				}
-
-			} 
-			function mostrarDatos($valor, $key){
-				echo $key . " -> $valor" . "<br>";
-			}
-
-			
-			/*foreach ($_SESSION['invetario'] as $codigo =>$detalles) {
-				echo '<h1> $codigo </h1>';
-				foreach ($detalles as $clave=>$valor) {
-					echo '<p> $clave: $valor </p>';
+				foreach ($detalles as $clave=>$info) {
+					echo $clave.':'. $info .'<br>';
 					
 				}
 				
-			}*/
-
-			//array_walk($_SESSION['inventario'][$_GET['codigo']], mostrarDatos);
+			}
 			
-
+			//var_dump($_SESSION['inventario']);
+			
 		}
 
-		
-		
-		
-
 	}
+	//session_destroy();
 
 	?>
 
